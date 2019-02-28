@@ -329,3 +329,16 @@ function get_tag_name( $object ) {
   $tag_name = $tag;
   return $tag_name;
 }
+
+
+
+//scriptにasyncを追加
+if ( !(is_admin() ) ) {
+  function replace_scripttag ( $tag ) {
+    if ( !preg_match( '/\b(defer|async)\b/', $tag ) ) {
+      return str_replace( "type='text/javascript'", 'async', $tag );
+    }
+    return $tag;
+  }
+  add_filter( 'script_loader_tag', 'replace_scripttag' );
+}
