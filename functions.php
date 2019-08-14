@@ -1,8 +1,9 @@
 <?php
-//wp_enqueue_script('jquery');
+// wp_enqueue_script('jquery');
+add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
 
-//管理画面で読み込むCSS
-//add_editor_style('css/style.css');
+add_editor_style('css/style.css');
+add_editor_style('style.css');
 
 //headerで読み込むCSS
 if ( !is_admin() ) {
@@ -13,10 +14,10 @@ if ( !is_admin() ) {
         wp_enqueue_style($css_name,TEMPLATE_DIRE.$file_path, array(), date('YmdGis', filemtime(TEMPLATE_PATH.$file_path)));
     }
     function wp_script($script_name, $file_path, $bool = true){
-        wp_enqueue_script($script_name,TEMPLATE_DIRE.$file_path, array(), date('YmdGis', filemtime(TEMPLATE_PATH.$file_path)), $bool);
+        wp_enqueue_script($script_name,TEMPLATE_DIRE.$file_path, array('jquery'), date('YmdGis', filemtime(TEMPLATE_PATH.$file_path)), $bool);
     }
     //以下のように使う
-    // wp_script('js','/js/javascript.js');
+    wp_script('js','/js/bundle.js');
     wp_css('common_style','/style.css');
     wp_css('css_style','/css/style.css');
   }
@@ -33,7 +34,7 @@ add_action('the_content', 'imagepassshort');
 
 //コンテンツ内のリンクパスを置き換える
 function urlpassshort($arg) {
-$content = str_replace('"home_url/', '"' . get_bloginfo('siteurl') . '/', $arg);
+$content = str_replace('"home_url/', '"' . get_bloginfo('url') . '/', $arg);
 return $content;
 }
 add_action('the_content', 'urlpassshort');
@@ -168,10 +169,29 @@ function is_mobile(){
 }
 
 register_nav_menus();
-register_sidebar();
+register_sidebar(array(
+  'id' => 'sidebar-1',
+));
 add_theme_support('post-thumbnails');
-//remove_filter('the_content', 'wpautop');
-//remove_filter('the_excerpt', 'wpautop');
+
+add_filter( 'post_thumbnail_html', 'custom_attribute' );
+function custom_attribute( $html ){
+    // width height を削除する
+    $html = preg_replace('/(width|height)="\d*"\s/', '', $html);
+    return $html;
+}
+
+
+//scriptにasyncを追加
+if ( !(is_admin() ) ) {
+  function replace_scripttag ( $tag ) {
+    if ( !preg_match( '/\b(defer|async)\b/', $tag ) ) {
+      return str_replace( "type='text/javascript'", 'defer', $tag );
+    }
+    return $tag;
+  }
+  add_filter( 'script_loader_tag', 'replace_scripttag' );
+}
 
 
 //TinyMCE Advanceにスタイルを追加
@@ -287,45 +307,3 @@ function solecolor_wp_terms_checklist_args( $args, $post_id ){
   return $args;
 }
 add_filter('wp_terms_checklist_args', 'solecolor_wp_terms_checklist_args',10,2);
-
-
-//Rest apiへ追加する
-//カテゴリ名を取得する関数を登録
-add_action( 'rest_api_init', 'register_category_name' );
-
-function register_category_name() {
-//register_rest_field関数を用いget_category_name関数からカテゴリ名を取得し、追加する
-  register_rest_field( 'post',
-    'category_name',
-    array(
-      'get_callback'    => 'get_category_name'
-    )
-  );
-}
-
-//$objectは現在の投稿の詳細データが入る
-function get_category_name( $object ) {
-  $category = get_the_category($object[ 'id' ]);
-  $cat_name = $category[0]->cat_name;
-  return $cat_name;
-}
-
-//タグ名を取得する関数を登録
-add_action( 'rest_api_init', 'register_tag_name' );
-
-function register_tag_name() {
-//register_rest_field関数を用いget_tag_name関数からカテゴリ名を取得し、追加する
-  register_rest_field( 'post',
-    'tag_name',
-    array(
-      'get_callback'    => 'get_tag_name'
-    )
-  );
-}
-
-//$objectは現在の投稿の詳細データが入る
-function get_tag_name( $object ) {
-  $tag = get_the_tags($object[ 'id' ]);
-  $tag_name = $tag;
-  return $tag_name;
-}

@@ -16,52 +16,6 @@ $theme_fonts: 'NotoSans-R',YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku 
 $headline_fonts: 'NotoSans-M' ,YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
 //$headline_fonts: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
 
-@font-face {
-   font-family: 'NotoSans-L';
-   font-style: normal;
-   font-weight: 500;
-   src: url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Light.woff2) format('woff2'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Light.woff) format('woff'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Light.otf) format('opentype');
-}
-
-@font-face {
-   font-family: 'NotoSans-DL';
-   font-style: normal;
-   font-weight: 500;
-   src: url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-DemiLight.woff2) format('woff2'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-DemiLight.woff) format('woff'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-DemiLight.otf) format('opentype');
-}
-
-@font-face {
-   font-family: 'NotoSans-R';
-   font-style: normal;
-   font-weight: 500;
-   src: url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Regular.woff2) format('woff2'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Regular.woff) format('woff'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Regular.otf) format('opentype');
-}
-
-@font-face {
-   font-family: 'NotoSans-M';
-   font-style: normal;
-   font-weight: 500;
-   src: url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.woff2) format('woff2'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.woff) format('woff'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.otf) format('opentype');
-}
-
-@font-face {
-   font-family: 'NotoSans-B';
-   font-style: normal;
-   font-weight: 500;
-   src: url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.woff2) format('woff2'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.woff) format('woff'),
-        url(https://fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.otf) format('opentype');
-}
-
-
 // 横幅
 $content_width:1200px;
 
@@ -81,30 +35,11 @@ $content_width:1200px;
 }
 
 /*font関連*/
-@mixin title_f{
+@mixin mincho{
   font-family: $headline_fonts;
 }
-@mixin txt_f{
+@mixin gothic{
   font-family: $theme_fonts;
-}
-
-@mixin flex(){
-  display:-webkit-box;
-  display:-moz-box;
-  display:-ms-box;
-  display:-webkit-flexbox;
-  display:-moz-flexbox;
-  display:-ms-flexbox;
-  display:-webkit-flex;
-  display:-moz-flex;
-  display:-ms-flex;
-  display:flex;
-  -webkit-box-lines:multiple;
-  -moz-box-lines:multiple;
-  -webkit-flex-wrap:wrap;
-  -moz-flex-wrap:wrap;
-  -ms-flex-wrap:wrap;
-  flex-wrap:wrap;
 }
 
 img{
@@ -175,6 +110,39 @@ figcaption{
 @media screen and (max-width: 768px){
 }
 
+
+/*******************************
+  nav
+*******************************/
+.spmenu_btn{
+  display: none;
+  @media screen and (max-width: 768px){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 45px;
+    height: 45px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 5;
+    &::before,&::after{
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: #000;
+    }
+    span{
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: #000;
+      margin: 2px 0;
+    }
+  }
+}
 
 /*******************************
   content size
@@ -275,47 +243,9 @@ figcaption{
   content layoput
 *******************************/
 
-
-/*******************************
-  vue-infinite-loader
-*******************************/
-.infinite-loading-container{
-  display: block;
-  width: 100%;
-  margin-top: 100px;
-}
-
-
-/*******************************
-  ready-loading
-*******************************/
-.preloader{
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba($color-theme, .95);
-  z-index: 30000;
-  transition: all 0.5s ease-out;
-  opacity: 1;
-  &__icon{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-  }
-  &__remove{
-    left: -100%;
-    opacity: 0;
-  }
-}
-
 /*******************************
   border
 *******************************/
-
-
 
 /*******************************
   サイト固有

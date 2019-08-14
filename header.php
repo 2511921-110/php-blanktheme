@@ -10,19 +10,17 @@
 </head>
 <body <?php body_class(); ?>>
 	<header id="header">
-	<?php
-        $args = array( 'pagename' => 'home/header' );
-        $the_query = new WP_Query( $args );
-	        while ( $the_query->have_posts() ) : $the_query->the_post();
-        $post_id = get_the_ID();
-        
-        the_content();
-        
-        endwhile;
-        wp_reset_postdata();
+  	<?php
+      $args = array( 'pagename' => 'home/header' );
+      $the_query = new WP_Query( $args );
+        while ( $the_query->have_posts() ) : $the_query->the_post();
+      $post_id = get_the_ID();
+      the_content();
+      endwhile;
+      wp_reset_postdata();
     ?>
 		<div class="navwrap">
-			<span class="spmenu_btn"></span>
+			<span class="spmenu_btn"><span></span></span>
 			<nav class="globalNav">
 				<?php wp_nav_menu( array( 'menu' => 'globalNav' ) ); ?>
 			</nav>
