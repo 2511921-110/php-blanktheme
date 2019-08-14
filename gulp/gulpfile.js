@@ -52,7 +52,7 @@ gulp.task("default", function() {
     .pipe(gulp.dest( dstGlob ));
     });
     browserSync({
-      proxy: "http://ito.blog/",
+      proxy: "http://feldrive.wrr/",
       files: [
         "../**/*.css",
         "../**/*.js",

@@ -1,4 +1,3 @@
-</div>
 	<footer>
 		<?php
 			$args = array( 'pagename' => 'home/footer' );
@@ -22,32 +21,29 @@
 		</div>
 <!-- <a href="<?php echo home_url(); ?>/contact/" class="fixed_btn"><img src="<?php echo get_template_directory_uri(); ?>/assets/fixed_btn.png" alt="" /></a> -->
 	</footer>
-	<script type="text/javascript" charset="utf-8">
-jQuery(document).ready(function($){
-			$(function(){
-			    $(".spmenu_btn").on("click", function() {
-			        $(this).next().slideToggle();
-			        $(this).toggleClass("active");
-			    });
-			});
-var pagetop = $('.cm_totop');
-	$(window).scroll(function(){
-		if($(this).scrollTop() > 200) {
-			pagetop.fadeIn('slow');
-		} else {
-			pagetop.fadeOut('slow');
-		}
-	});
-
-	$('a[href^=#]').click(function(){
-		var speed = 500;
-		var href= $(this).attr('href');
-		var target = $(href == '#' || href == "" ? 'html' : href);
-		var position = target.offset().top;
-		$('html, body').animate({scrollTop:position}, speed, 'swing');
-		return false;
-	});
+	<script defer>
+		window.addEventListener( 'load', function(){
+			jQuery(document).ready(function($){
+				var pagetop = $('.cm_totop');
+				$(window).scroll(function(){
+					if($(this).scrollTop() > 200) {
+						pagetop.fadeIn('slow');
+					} else {
+						pagetop.fadeOut('slow');
+					}
 				});
+
+				$('a[href^=#]').click(function(){
+					var speed = 500;
+					var href= $(this).attr('href');
+					var target = $(href == '#' || href == "" ? 'html' : href);
+					var position = target.offset().top;
+					$('html, body').animate({scrollTop:position}, speed, 'swing');
+					return false;
+				});
+			});
+		}, false);
+	var THEME_URL = '<?php echo home_url(); ?>';
 	</script>
 	<?php wp_footer(); ?>
 </body>
