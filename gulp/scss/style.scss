@@ -126,20 +126,84 @@ figcaption{
     position: fixed;
     right: 10px;
     top: 10px;
-    z-index: 5;
+    z-index: 6;
+    &:hover{
+      cursor: pointer;
+    }
     &::before,&::after{
       content: "";
       display: block;
       height: 1px;
       width: 100%;
       background-color: #000;
+      transition: all 0.3s;
+      position: absolute;
+    }
+    &::before{
+      left: 0;
+      top: 0;
+    }
+    &::after{
+      left: 0;
+      bottom: 0;
     }
     span{
       display: block;
       height: 1px;
       width: 100%;
       background-color: #000;
-      margin: 2px 0;
+      transition: all 0.3s;
+    }
+    &Close{
+      span{
+        width: 0;
+      }
+      &::before{
+        transform: rotate(45deg);
+        transform-origin: left top;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 140%;
+      }
+      &::after{
+        transform: rotate(-45deg);
+        transform-origin: left top;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 140%;
+      }
+    }
+  }
+}
+
+.globalNav{
+  @media screen and (max-width: 768px){
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    right: -100vw;
+    transition: all 0.4s;
+    z-index: 5;
+    background-color: #fff;
+    &_state{
+      right: 0;
+    }
+    .menu{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+      height: 100vh;
+      &-item{
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .menu-globalnav-container{
+      height: 100vh;
     }
   }
 }
