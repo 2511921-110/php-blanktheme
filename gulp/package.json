@@ -24,7 +24,7 @@
     "imagemin-jpeg-recompress": "^5.1.0",
     "imagemin-mozjpeg": "^7.0.0",
     "imagemin-pngquant": "^5.0.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "moment": "^2.22.2",
     "node-reset-scss": "^1.0.1",
     "node-sass": "^4.9.0",
