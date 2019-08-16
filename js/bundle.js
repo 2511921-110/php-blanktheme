@@ -79,6 +79,7 @@ if (document.getElementsByClassName('globalNav')[0]) {
   var nav_state_class = 'globalNav_state';
   var nav_target_class = '.globalNav';
   var nav_close_class = 'spmenu_btnClose';
+  var nav_wrap = document.querySelector('.menu');
 
   nav_el.addEventListener('click', function () {
     if (document.querySelector('.' + nav_state_class) === null) {
@@ -88,6 +89,11 @@ if (document.getElementsByClassName('globalNav')[0]) {
       document.querySelector(nav_target_class).classList.remove(nav_state_class);
       nav_el.classList.remove(nav_close_class);
     }
+  }, false);
+
+  nav_wrap.addEventListener('click', function () {
+    document.querySelector(nav_target_class).classList.remove(nav_state_class);
+    nav_el.classList.remove(nav_close_class);
   }, false);
 }
 
