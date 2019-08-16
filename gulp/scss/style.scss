@@ -180,6 +180,7 @@ figcaption{
 
 .globalNav{
   @media screen and (max-width: 768px){
+    display: flex;
     position: fixed;
     height: 100vh;
     width: 100vw;
@@ -196,14 +197,16 @@ figcaption{
       align-items: center;
       justify-content: center;
       align-content: center;
-      height: 100vh;
+      width: 100%;
       &-item{
         width: 100%;
         text-align: center;
       }
     }
     .menu-globalnav-container{
-      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-content: center;
     }
   }
 }
