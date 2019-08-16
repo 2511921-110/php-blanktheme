@@ -1,26 +1,23 @@
 /*******************
   Nav
 *******************/
-window.addEventListener('DOMContentLoaded', function() {
-  if(document.getElementsByClassName('globalNav')[0]){
-    const nav_el = document.querySelector('.spmenu_btn')
-    const nav_state_class = 'header__nav_state_on'
-    const nav_target_class = '.globalNav'
-    const nav_close_class = '.header__nav_close'
 
-    nav_el.addEventListener('click',()=>{
-      if(document.querySelector('.'+ nav_state_class) == null){
-        document.querySelector(nav_target_class).classList.add(nav_state_class)
-      }else{
-        document.querySelector(nav_target_class).classList.remove(nav_state_class)
-      }
-    },false)
+if(document.getElementsByClassName('globalNav')[0]){
+  const nav_el = document.querySelector('.spmenu_btn')
+  const nav_state_class = 'globalNav_state'
+  const nav_target_class = '.globalNav'
+  const nav_close_class = 'spmenu_btnClose'
 
-    document.querySelector(nav_close_class).addEventListener('click',()=>{
+  nav_el.addEventListener('click',()=>{
+    if(document.querySelector('.'+ nav_state_class) === null){
+      document.querySelector(nav_target_class).classList.add(nav_state_class)
+      nav_el.classList.add(nav_close_class)
+    }else{
       document.querySelector(nav_target_class).classList.remove(nav_state_class)
-    },false)
-  }
-}, false);
+      nav_el.classList.remove(nav_close_class)
+    }
+  },false)
+}
 
 
 /*******************
