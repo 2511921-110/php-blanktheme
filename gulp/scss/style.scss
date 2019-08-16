@@ -11,10 +11,10 @@ $color-link: #1a305a;
 $line: white;
 
 /*font*/
-//$theme_fonts: 'Noto Serif', 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
-$theme_fonts: 'NotoSans-R',YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
-$headline_fonts: 'NotoSans-M' ,YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
-//$headline_fonts: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+//$gothic_fonts: 'Noto Serif', 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
+$gothic_fonts: 'NotoSans-R',YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
+$mincho_fonts: 'NotoSans-M' ,YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
+//$mincho_fonts: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
 
 // 横幅
 $content_width:1200px;
@@ -36,10 +36,10 @@ $content_width:1200px;
 
 /*font関連*/
 @mixin mincho{
-  font-family: $headline_fonts;
+  font-family: $mincho_fonts;
 }
 @mixin gothic{
-  font-family: $theme_fonts;
+  font-family: $gothic_fonts;
 }
 
 img{
@@ -56,7 +56,7 @@ html{
 
 body{
   @include font-size(16);
-  font-family: $theme_fonts;
+  font-family: $gothic_fonts;
   line-height: 1.7;
   color: $color-theme;
   margin: 0;
@@ -105,6 +105,41 @@ table{
 
 figcaption{
   line-height: 1.7;
+}
+
+
+
+/*******************************
+  コンテンツ幅
+*******************************/
+.container{}
+
+
+/*******************************
+  カラム
+*******************************/
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@for $i from 1 through 100 {
+  .col-#{$i} {
+    max-width: #{$i}#{'%'};
+    width: 100%;
+  }
+  @media screen and (min-width: 560px){
+    .col-tb-#{$i} {
+      max-width: #{$i}#{'%'};
+      width: 100%;
+    }
+  }
+  @media screen and (min-width: 960px){
+    .col-pc-#{$i} {
+      max-width: #{$i}#{'%'};
+      width: 100%;
+    }
+  }
 }
 
 @media screen and (max-width: 768px){
@@ -237,11 +272,6 @@ figcaption{
 *******************************/
 .title{
 }
-
-
-/*******************************
-  text
-*******************************/
 
 
 /*******************************
