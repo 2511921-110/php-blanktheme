@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "axios": "^0.19.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -16,11 +18,15 @@
     "css-loader": "^3.2.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
-    "gulp-changed": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-changed": "^4.0.1",
     "gulp-imagemin": "^6.0.0",
+    "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2",
+    "gulp-sass-glob": "^1.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify-es": "^1.0.4",
     "imagemin-jpeg-recompress": "^6.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0",
@@ -39,7 +45,13 @@
     "vue-pure-lightbox": "^3.1.0",
     "vue-slick": "^1.1.15",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.39.2",
+    "webpack": "^4.39.3",
     "webpack-stream": "^5.2.1"
-  }
+  },
+  "browserslist": [
+    "last 2 versions",
+    "ie 9",
+    "iOS 8.1",
+    "Android 4.0"
+  ]
 }

@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',//production
   // エントリーポイントの設定
   entry: './js/app.js',
   // 出力の設定
@@ -11,14 +12,14 @@ module.exports = {
     path: path.join(__dirname, 'js')
   },
   module:{
-  	loaders:[{
-  		test: /\.js$/,
-  		exclude: /node_modules/,
-  		loader: [
-  			'babel-loader',
-  			// 'vue-loader'
-  		]
-  	},
+    rules:[{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: [
+        'babel-loader',
+        // 'vue-loader'
+      ]
+    },
     {
       test: /\.vue$/,
       loader: [
@@ -36,7 +37,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.css'],
+    extensions: ['.js'],
     alias: {
     // vue.js のビルドを指定する
       vue: 'vue/dist/vue.js',

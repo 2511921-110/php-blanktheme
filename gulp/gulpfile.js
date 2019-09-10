@@ -3,84 +3,129 @@ const gulp = require("gulp");
 const sass = require("gulp-sass");
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
+const glob = require("gulp-sass-glob");
 const plumber  = require('gulp-plumber');
 const changed  = require('gulp-changed');
 const imagemin = require('gulp-imagemin');
-const imageminJpg = require('imagemin-jpeg-recompress');
-const imageminPng = require('imagemin-pngquant');
-const imageminGif = require('imagemin-gifsicle');
+const pngquant = require('imagemin-pngquant');
 const mozjpeg  = require('imagemin-mozjpeg');
 const browserSync = require('browser-sync');
+const notify = require('gulp-notify');
+const babel = require("gulp-babel");
+const uglify = require("gulp-uglify-es").default;
 
 const webpackStream = require("webpack-stream");
 const webpack = require("webpack");
 
-const folderName = ".."
-
-// 圧縮前と圧縮後のディレクトリを定義
-const paths = {
-  srcDir : 'src',// 圧縮前のディレクトリ
-  dstDir : folderName+'/assets'// 圧縮後のディレクトリ
-}
-
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
 
 // webpackの設定ファイルの読み込み
 const webpackConfig = require("./webpack.config");
 
+// 全ファイルパス
+const paths = {
+  rootDir: "../",
+  scssSrc: "scss/**/*.scss",
+  jsSrc: "js/**/*.js",
+  imgSrc: "src/**/*",
+  outCss: "../css",
+  outJs: "../js",
+  outImg: "../assets/",
+};
 
-//タスクの定義
-gulp.task("default", function() {
-  // jpg,png,gif画像の圧縮タスク
-    var srcGlob = paths.srcDir + '/**/*.+(jpg|jpeg|png|gif|svg)';
-    var dstGlob = paths.dstDir;
-    gulp.watch( srcGlob , function(){
-    gulp.src( srcGlob )
-    .pipe(changed( dstGlob ))
-    .pipe(imagemin([
-        imageminPng(),
-        imageminJpg(),
-        imageminGif({
-            interlaced: false,
-            optimizationLevel: 3,
-            colors:180
-        })
-    ]
-    ))
-    .pipe(gulp.dest( dstGlob ));
-    });
-    browserSync({
-      proxy: "http://orchidshika.wrr/",
-      files: [
-        "../**/*.css",
-        "../**/*.js",
-        "../**/*.php",
-      ]
-      /*server: {
-         baseDir: folderName       //対象ディレクトリ
-        ,index  : "index.html"      //インデックスファイル
-      }*/
-    });
-  gulp.watch( folderName+"/*.php" ,['bs-reload']);
-  gulp.watch( folderName+"/css/*.css" ,['bs-reload']);
-  gulp.watch("scss/*.scss", function(){
-    gulp.src("scss/*.scss") //ファイルの参照先を指定
-      .pipe(plumber())
-      .pipe(sourcemaps.init())
-      .pipe(sass({
-        includePaths: require('node-reset-scss').includePath,
-        outputStyle: 'expanded'
-      }).on('error', sass.logError)) //プラグインの実行
-      .pipe(sourcemaps.write({includeContent: false}))
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(autoprefixer())
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest(folderName+"/css")); //処理を行ったファイルの保存先を指定
-    });
-  gulp.watch("./js/*.js", function(){
-    return webpackStream(webpackConfig, webpack)
-      .pipe(gulp.dest(folderName+"/js"))
+// browser sync
+function browserSyncFunc(done){
+  browserSync.init({
+    // server: {
+    //   baseDir: paths.rootDir,
+    //   middleware: [
+    //     ssi({
+    //       baseDir: paths.rootDir,
+    //       notify: false, //通知
+    //       ext: ".html"
+    //     })
+    //   ]
+    // },
+    proxy: "http://feldrive.wrr/",
+    files: [
+      "../**/*.css",
+      "../**/*.js",
+      "../**/*.php",
+    ],
+    port: 4000,
+    reloadOnRestart: true
   });
-});
+  done();
+}
+
+
+// sass
+function sassFunc() {
+  return gulp.src(paths.scssSrc , {
+      sourcemaps: true
+  })
+  .pipe(plumber({
+      errorHandler: notify.onError('<%= error.message %>'),
+  }))
+  .pipe(glob())
+  .pipe(sass({
+      outputStyle: 'compressed'
+  }))
+  .pipe(gulp.dest(paths.outCss), {
+      sourcemaps: './sourcemaps'
+  })
+  .pipe(gulp.dest(paths.outCss), {
+      sourcemaps: './sourcemaps'
+  })
+  .pipe(browserSync.stream());
+}
+
+
+// js
+function jsFunc() {
+  return plumber({
+    errorHandler: notify.onError('<%= error.message %>'),
+  })
+  .pipe(webpackStream(webpackConfig, webpack))
+  .pipe(babel())
+  .pipe(uglify({}))
+  .pipe(gulp.dest(paths.outJs));
+}
+
+
+// img
+function imgFunc() {
+  return gulp.src(paths.imgSrc)
+  .pipe(changed(paths.outImg))
+  .pipe(gulp.dest(paths.outImg))
+  .pipe(imagemin(
+    [
+      mozjpeg({
+        quality: 80 //画像圧縮率
+      }),
+      pngquant()
+    ],
+    {
+      verbose: true
+    }
+  ))
+}
+
+
+
+// watch
+function watchFunc(done) {
+  gulp.watch(paths.scssSrc, gulp.parallel(sassFunc));
+  gulp.watch(paths.jsSrc, gulp.parallel(jsFunc));
+  gulp.watch(paths.imgSrc, gulp.parallel(imgFunc));
+  done();
+}
+
+
+// scripts tasks
+gulp.task('default',
+  gulp.parallel(
+    browserSyncFunc, watchFunc, sassFunc, jsFunc,imgFunc
+  )
+);
+
+
