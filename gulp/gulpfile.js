@@ -45,7 +45,7 @@ function browserSyncFunc(done){
     //     })
     //   ]
     // },
-    proxy: "http://feldrive.wrr/",
+    proxy: "http://kirattoribon.wrr/",
     files: [
       "../**/*.css",
       "../**/*.js",
