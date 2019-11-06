@@ -18,8 +18,9 @@ if ( !is_admin() ) {
     }
     //以下のように使う
     wp_script('js','/js/bundle.js');
-    wp_css('common_style','/style.css');
+    wp_css('bootstrap','/css/bootstrap-grid.css');
     wp_css('css_style','/css/style.css');
+    wp_css('common_style','/style.css');
   }
   add_action('wp_enqueue_scripts', 'add',1);
 }
