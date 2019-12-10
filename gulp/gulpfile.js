@@ -45,7 +45,7 @@ function browserSyncFunc(done){
     //     })
     //   ]
     // },
-    proxy: "http://kirattoribon.wrr/",
+    proxy: "http://autocoast2019.wrr/",
     files: [
       "../**/*.css",
       "../**/*.js",
