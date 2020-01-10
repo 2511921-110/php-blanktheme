@@ -45,7 +45,7 @@ function browserSyncFunc(done){
     //     })
     //   ]
     // },
-    proxy: "http://autocoast2019.wrr/",
+    proxy: "http://st-ballet.wrr/",
     files: [
       "../**/*.css",
       "../**/*.js",
