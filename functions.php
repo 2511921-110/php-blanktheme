@@ -2,8 +2,21 @@
 // wp_enqueue_script('jquery');
 add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
 
-add_editor_style('css/style.css');
-add_editor_style('style.css');
+// add_editor_style('css/style.css');
+// add_editor_style('style.css');
+add_filter( 'editor_stylesheets', 'editor_stylesheets_custom_demo');
+function editor_stylesheets_custom_demo($stylesheets) {
+  //$stylesheets配列に対してフルパスでCSSファイルURLを指定する
+ 
+  //$stylesheets配列の最後に読み込む順番でファイルパスを追加していく
+  array_push($stylesheets,
+    get_template_directory_uri().'css/editor-style.css',
+    get_template_directory_uri().'css/style.css',
+    get_template_directory_uri().'/style.css'
+  );
+  //読み込むCSSファイル配列は返り値として返す
+  return $stylesheets;
+}
 
 //headerで読み込むCSS
 if ( !is_admin() ) {
@@ -18,8 +31,9 @@ if ( !is_admin() ) {
     }
     //以下のように使う
     wp_script('js','/js/bundle.js');
-    wp_css('common_style','/style.css');
+    wp_css('bootstrap','/css/bootstrap-grid.css');
     wp_css('css_style','/css/style.css');
+    wp_css('common_style','/style.css');
   }
   add_action('wp_enqueue_scripts', 'add',1);
 }
@@ -284,6 +298,84 @@ return $init;
 }
 add_filter('tiny_mce_before_init', 'my_mce4_options');
 
+
+/*----------------------------------------
+  エディタへのスタイル反映
+----------------------------------------*/
+function add_editor_style_cb() {
+  // add_editor_style();
+  add_editor_style(array('css/editor-style.css', 'css/style.css', 'style.css'));
+}
+add_action('admin_init', 'add_editor_style_cb');
+/*----------------------------------------------------------
+  TinyMCE Advanceにスタイルを追加
+----------------------------------------------------------*/
+function _my_tinymce($initArray) {
+  $style_formats = array(
+    array(
+      'title' => 'text:small',
+      'inline' => 'span',
+      'classes' => 'text-small'
+    ),
+    array(
+      'title' => 'text:large',
+      'inline' => 'span',
+      'classes' => 'text-large'
+    ),
+    array(
+      'title' => 'marker:yellow',
+      'inline' => 'span',
+      'classes' => 'marker-yellow'
+    ),
+    array(
+      'title' => 'marker:pink',
+      'inline' => 'span',
+      'classes' => 'marker-pink'
+    ),
+    array(
+      'title' => 'marker:water',
+      'inline' => 'span',
+      'classes' => 'marker-water'
+    ),
+    array(
+      'title' => 'marker:lime',
+      'inline' => 'span',
+      'classes' => 'marker-lime'
+    ),
+    array(
+      'title' => 'box:title',
+      'block' => 'p',
+      'classes' => 'box-title'
+    ),
+    array(
+      'title' => 'box:water',
+      'block' => 'div',
+      'classes' => 'box box-water',
+      'wrapper' => true,
+    ),
+    array(
+      'title' => 'box:red',
+      'block' => 'div',
+      'classes' => 'box box-red',
+      'wrapper' => true,
+    ),
+    array(
+      'title' => 'box:gray',
+      'block' => 'div',
+      'classes' => 'box box-gray',
+      'wrapper' => true,
+    ),
+    array(
+      'title' => 'box:green',
+      'block' => 'div',
+      'classes' => 'box box-lime',
+      'wrapper' => true,
+    ),
+  );
+  $initArray['style_formats'] = json_encode($style_formats);
+  return $initArray;
+}
+add_filter('tiny_mce_before_init', '_my_tinymce', 10000);
 
 /*
 * shortcodeがpタグに囲まれるfix
