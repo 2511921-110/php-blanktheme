@@ -392,10 +392,8 @@ function shortcode_empty_paragraph_fix($content) {
 
 
 //カテゴリーの順番が変わらないようにする
-function solecolor_wp_terms_checklist_args( $args, $post_id ){
-  if ( $args['checked_ontop'] !== false ){
-    $args['checked_ontop'] = false;
-  }
+function wp_category_terms_checklist_repair( $args, $post_id = null ) {
+  $args['checked_ontop'] = false;
   return $args;
 }
-add_filter('wp_terms_checklist_args', 'solecolor_wp_terms_checklist_args',10,2);
+add_action( 'wp_terms_checklist_args', 'wp_category_terms_checklist_repair' );
