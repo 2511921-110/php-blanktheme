@@ -64,6 +64,9 @@ body{
 
 p{
   margin: 0 0 1em 0;
+  &:last-child{
+    margin-bottom: 0;
+  }
 }
 
 ul{
@@ -103,47 +106,53 @@ table{
   }
 }
 
+figure{
+  margin: 0;
+}
+
 figcaption{
   line-height: 1.7;
 }
 
+dd{
+  margin-left: 0;
+}
 
+/* iOSでのデフォルトスタイルをリセット */
+input[type="submit"],
+input[type="button"] {
+  border-radius: 0;
+  -webkit-box-sizing: content-box;
+  -webkit-appearance: button;
+  appearance: button;
+  border: none;
+  box-sizing: border-box;
+  &::-webkit-search-decoration {
+    display: none;
+  }
+  &::focus {
+    outline-offset: -2px;
+  }
+}
 
 /*******************************
   コンテンツ幅
 *******************************/
-.container{}
-
-
-/*******************************
-  カラム
-*******************************/
-.row{
-  display: flex;
-  flex-wrap: wrap;
+.container{
+  &__min{}
+  &__large{}
 }
 
-@for $i from 1 through 100 {
-  .col-#{$i} {
-    max-width: #{$i}#{'%'};
-    width: 100%;
-  }
-  @media screen and (min-width: 560px){
-    .col-tb-#{$i} {
-      max-width: #{$i}#{'%'};
-      width: 100%;
-    }
-  }
-  @media screen and (min-width: 960px){
-    .col-pc-#{$i} {
-      max-width: #{$i}#{'%'};
-      width: 100%;
-    }
-  }
+@media screen and (min-width: 415px){
+  // iphone 6 Plusよりも大きい場合
 }
-
+@media screen and (min-width: 769px){
+  // ipadの縦表示よりも大きい場合
+}
 @media screen and (max-width: 768px){
+  // ipadの縦表示以下の場合
 }
+
 
 
 /*******************************
@@ -162,6 +171,8 @@ figcaption{
     right: 10px;
     top: 10px;
     z-index: 6;
+    padding: 5px;
+    background-color: rgba($color-theme, 0.7);
     &:hover{
       cursor: pointer;
     }
@@ -169,23 +180,23 @@ figcaption{
       content: "";
       display: block;
       height: 1px;
-      width: 100%;
+      width: 35px;
       background-color: #000;
       transition: all 0.3s;
       position: absolute;
     }
     &::before{
-      left: 0;
-      top: 0;
+      left: 5px;
+      top: 5px;
     }
     &::after{
-      left: 0;
-      bottom: 0;
+      left: 5px;
+      bottom: 5px;
     }
     span{
       display: block;
       height: 1px;
-      width: 100%;
+      width: 35px;
       background-color: #000;
       transition: all 0.3s;
     }
