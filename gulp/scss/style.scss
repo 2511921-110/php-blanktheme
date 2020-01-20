@@ -16,10 +16,6 @@ $gothic_fonts: 'NotoSans-R',YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku
 $mincho_fonts: 'NotoSans-M' ,YuGothic,"ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
 //$mincho_fonts: 游明朝,"Yu Mincho",YuMincho,"Hiragino Mincho ProN",HGS明朝E,メイリオ,Meiryo,serif;
 
-// 横幅
-$content_width:1200px;
-
-
 @mixin cf{
   &:after{
     content:" ";
@@ -258,27 +254,6 @@ input[type="button"] {
 }
 
 /*******************************
-  content size
-*******************************/
-
-.wrap{
-  max-width: $content_width;
-  margin-left: auto;
-  margin-right: auto;
-  &__min{
-    max-width: $content_width * 0.7;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  &__large{
-    max-width: $content_width * 1.05;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-
-/*******************************
   title
 *******************************/
 .title{
@@ -286,7 +261,7 @@ input[type="button"] {
 
 
 /*******************************
-  col padding
+  text
 *******************************/
 
 
@@ -301,7 +276,17 @@ input[type="button"] {
 
 
 /*******************************
-  header & nav
+  border
+*******************************/
+
+
+/*******************************
+  header
+*******************************/
+
+
+/*******************************
+  nav
 *******************************/
 
 
@@ -310,7 +295,6 @@ input[type="button"] {
 *******************************/
 .footer{
 }
-
 
 /*******************************
   slider
@@ -338,6 +322,11 @@ input[type="button"] {
 
 
 /*******************************
+  archive
+*******************************/
+
+
+/*******************************
   aside
 *******************************/
 
@@ -346,14 +335,6 @@ input[type="button"] {
   lightbox
 *******************************/
 
-
-/*******************************
-  content layoput
-*******************************/
-
-/*******************************
-  border
-*******************************/
 
 /*******************************
   サイト固有
