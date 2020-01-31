@@ -10,8 +10,8 @@ function editor_stylesheets_custom_demo($stylesheets) {
  
   //$stylesheets配列の最後に読み込む順番でファイルパスを追加していく
   array_push($stylesheets,
-    get_template_directory_uri().'css/editor-style.css',
-    get_template_directory_uri().'css/style.css',
+    get_template_directory_uri().'/css/editor-style.css',
+    get_template_directory_uri().'/css/style.css',
     get_template_directory_uri().'/style.css'
   );
   //読み込むCSSファイル配列は返り値として返す
@@ -197,14 +197,13 @@ function custom_attribute( $html ){
 
 
 //scriptにasyncを追加
-if ( !(is_admin() ) ) {
-  function replace_scripttag ( $tag ) {
-    if ( !preg_match( '/\b(defer|async)\b/', $tag ) ) {
-      return str_replace( "type='text/javascript'", 'defer', $tag );
-    }
-    return $tag;
+if (!(is_admin() )) {
+  function add_async_to_enqueue_script( $url ) {
+    if ( FALSE === strpos( $url, '.js' ) ) return $url;
+    if ( strpos( $url, 'jquery.js' ) ) return $url;
+    return "$url' async charset='UTF-8";
   }
-  add_filter( 'script_loader_tag', 'replace_scripttag' );
+  add_filter( 'clean_url', 'add_async_to_enqueue_script', 11, 1 );
 }
 
 
@@ -397,3 +396,61 @@ function wp_category_terms_checklist_repair( $args, $post_id = null ) {
   return $args;
 }
 add_action( 'wp_terms_checklist_args', 'wp_category_terms_checklist_repair' );
+
+
+function image_tag_delete( $html ){
+  $html = preg_replace( '/(width|height)="\d*"\s/', '', $html );
+  /*$html = preg_replace( '/class=[\'"]([^\'"]+)[\'"]/i', '', $html );
+  $html = preg_replace( '/title=[\'"]([^\'"]+)[\'"]/i', '', $html );*/
+  $html = preg_replace( '/<a href=".+">/', '', $html );
+  $html = preg_replace( '/<\/a>/', '', $html );
+  return $html;
+}
+add_filter( 'image_send_to_editor', 'image_tag_delete', 10 );
+add_filter( 'post_thumbnail_html', 'image_tag_delete', 10 );
+
+
+
+
+//カスタム投稿追加
+// add_action( 'init', 'create_post_type' );
+// function create_post_type() {
+//   //カスタム投稿で使う内容
+//   $exampleSupports = [
+//     'title',
+//     'editor',
+//     'thumbnail',
+//     'excerpt',
+//     'revisions'
+//   ];
+
+//   //カスタム投稿を追加
+//   register_post_type( 'news', [ // 投稿タイプ名の定義
+//     'labels' => [
+//       'name'          => 'お知らせ一覧', // 管理画面上で表示する投稿タイプ名
+//       'singular_name' => 'お知らせ', // カスタム投稿の識別名
+//     ],
+//     'public'        => true,  // 投稿タイプをpublicにするか
+//     'has_archive'   => true, // アーカイブ機能ON/OFF
+//     'menu_position' => 6,     // 管理画面上での配置場所
+//     'show_in_rest'  => true,
+//     'supports' => $exampleSupports,
+//     'taxonomies' => array('type'),
+//   ]);
+
+//   //タクソノミーを入れる
+//   //第一引数はタクソノミー名入れて配列に使うカスタム投稿名を指定
+//   register_taxonomy(
+//     'type', array('news'),array(
+//     'label' => '種別',
+//     'hierarchical' => true,
+//     'show_ui' => true,
+//     'query_var' => true,
+//     'rewrite' => array(
+//       'slug' => 'area',
+//       'hierarchical' => true
+//     ),
+//     'show_in_rest' => true,
+//   ));
+
+// }
