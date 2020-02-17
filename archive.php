@@ -25,12 +25,12 @@
 					</div>
 					<div class="txt">
 						<?php
-							if(mb_strlen($post->post_content, 'UTF-8')>100){
-								$content= mb_substr($post->post_content, 0, 100, 'UTF-8');
-								echo $content.'……';
-							}else{
-								echo $post->post_content;
-							}
+							// if(mb_strlen($post->post_content, 'UTF-8')>100){
+							// 	$content= mb_substr($post->post_content, 0, 100, 'UTF-8');
+							// 	echo $content.'……';
+							// }else{
+							// 	echo $post->post_content;
+							// }
 						?>
 					</div>
 					<?php the_content(); ?>
@@ -40,18 +40,11 @@
 				<p>記事がありません</p>
 		<?php endif; ?>
 
-		<?php
-			if ($post->max_num_pages > 1) {
-				echo paginate_links(array(
-					'base' => get_pagenum_link(1) . '%_%',
-					'format' => 'page/%#%/',
-					'current' => max(1, $paged),
-					'total' => $the_query->max_num_pages
-				));
-			}
-		?>
-
 		<?php wp_reset_postdata(); ?>
+
+		<?php
+			pagination();
+		?>
   </article>
 </main>
 
