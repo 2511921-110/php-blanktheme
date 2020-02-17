@@ -6,20 +6,39 @@
 			$post_id = get_the_ID();
 		?>
 		<?php the_content(); ?>
-		<div class="sp_btn">
-			<?php $post_id = get_the_ID(); $spbtn = get_post_meta($post_id,'sp_btn',true); if($spbtn){ ?><div class="laft_phono"><?php echo $spbtn; ?></div><?php } ?>
-		</div>
 		<?php
 			endwhile;
 			wp_reset_postdata();
 		?>
-		<?php if(!is_mobile()): ?>
-		<div class="cm_totop"><a href="#header"><span> ↑ </span>Page top</a></div>
+		<?php if(!wp_is_mobile()): ?>
+			<div class="cm_totop"><a href="#header"><span> <i class="fas fa-angle-double-up"></i> </span>TO TOP</a></div>
 		<?php endif; ?>
-		<div class="footnav">
-			<?php wp_nav_menu( array( 'menu' => 'globalNav' ) ); ?>
-		</div>
-<!-- <a href="<?php echo home_url(); ?>/contact/" class="fixed_btn"><img src="<?php echo get_template_directory_uri(); ?>/assets/fixed_btn.png" alt="" /></a> -->
+
+		<?php
+			if(wp_is_mobile()):
+			$page_id = get_page_by_path('home/footer');
+			$left = get_field('left', $page_id -> ID);
+			$center = get_field('center', $page_id -> ID);
+			$right = get_field('right', $page_id -> ID);
+		?>
+			<div class="sp__fixed">
+				<?php if(is_array($left)): ?>
+					<a href="<?php echo $left['link']['url']; ?>">
+						<?php echo $left['icon']; ?><?php echo $left['text']; ?>
+					</a>
+				<?php endif; ?>
+				<?php if(is_array($center)): ?>
+					<a href="<?php echo $center['link']['url']; ?>">
+						<?php echo $center['icon']; ?><?php echo $center['text']; ?>
+					</a>
+				<?php endif; ?>
+				<?php if(is_array($right)): ?>
+					<a href="<?php echo $right['link']; ?>">
+						<?php echo $right['icon']; ?><?php echo $right['text']; ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 	</footer>
 	<script defer>
 		window.addEventListener( 'load', function(){

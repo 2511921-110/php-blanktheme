@@ -4,54 +4,47 @@
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <section>
         <div class="post">
-					<a href="<?php the_permalink(); ?>">
-						<figure><?php the_post_thumbnail('medium'); ?></figure>
-					</a>
-					<div class="wrap">
-						<h1 class="title">
-							<a href="<?php the_permalink(); ?>">
-								<?php
-									//if(mb_strlen($post->post_title, 'UTF-8')>5){
-									//	$title= mb_substr($post->post_title, 0, 5, 'UTF-8');
-									//	echo $title.'……';
-									//}else{
-									//	echo $post->post_title;
-									//}
-									the_title(  );
-								?>
-							</a>
-						</h1>
-						<p class="data"><?php echo get_the_date('Y-m-d'); ?></p>
+        	<div class="post__img">
+						<a href="<?php the_permalink(); ?>">
+							<?php the_post_thumbnail('medium'); ?>
+						</a>
 					</div>
-					<div class="txt">
+					<h1 class="post__title">
+						<a href="<?php the_permalink(); ?>">
+							<?php
+								//if(mb_strlen($post->post_title, 'UTF-8')>5){
+								//	$title= mb_substr($post->post_title, 0, 5, 'UTF-8');
+								//	echo $title.'……';
+								//}else{
+								//	echo $post->post_title;
+								//}
+								the_title(  );
+							?>
+						</a>
+					</h1>
+					<time class="post__time" datetime="<?php the_time('Y-m-d'); ?>T<?php the_time('H:i:sP'); ?>"><?php the_time('Y.m.d'); ?></time>
+					<div class="post__content">
 						<?php
-							if(mb_strlen($post->post_content, 'UTF-8')>100){
-								$content= mb_substr($post->post_content, 0, 100, 'UTF-8');
-								echo $content.'……';
-							}else{
-								echo $post->post_content;
-							}
+							// if(mb_strlen($post->post_content, 'UTF-8')>100){
+							// 	$content= mb_substr($post->post_content, 0, 100, 'UTF-8');
+							// 	echo $content.'……';
+							// }else{
+							// 	echo $post->post_content;
+							// }
 						?>
+						<?php the_content(); ?>
 					</div>
-					<?php the_content(); ?>
 				</div>
       </section>
 		<?php endwhile; else : ?>
 				<p>記事がありません</p>
 		<?php endif; ?>
 
-		<?php
-			if ($post->max_num_pages > 1) {
-				echo paginate_links(array(
-					'base' => get_pagenum_link(1) . '%_%',
-					'format' => 'page/%#%/',
-					'current' => max(1, $paged),
-					'total' => $the_query->max_num_pages
-				));
-			}
-		?>
-
 		<?php wp_reset_postdata(); ?>
+
+		<?php
+			pagination();
+		?>
   </article>
 </main>
 

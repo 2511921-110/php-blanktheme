@@ -1,12 +1,12 @@
 <?php get_header(); ?>
 <main>
-  <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+  <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <section>
         <?php the_title(); ?>
         <?php the_content(); ?>
       </section>
-    </article>
-  <?php endwhile; endif; ?>
+    <?php endwhile; endif; ?>
+  </article>
 </main>
 <?php get_footer(); ?>
