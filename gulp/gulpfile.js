@@ -68,7 +68,9 @@ function sassFunc() {
   }))
   .pipe(glob())
   .pipe(sass({
+    includePaths: require('node-reset-scss').includePath,
       outputStyle: 'compressed'
+      // outputStyle: 'expanded'
   }))
   .pipe(gulp.dest(paths.outCss), {
       sourcemaps: './sourcemaps'
@@ -124,7 +126,8 @@ function watchFunc(done) {
 // scripts tasks
 gulp.task('default',
   gulp.parallel(
-    browserSyncFunc, watchFunc, sassFunc, jsFunc,imgFunc
+    browserSyncFunc, watchFunc
+    // browserSyncFunc, watchFunc, sassFunc, jsFunc,imgFunc
   )
 );
 
