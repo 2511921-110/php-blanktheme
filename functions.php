@@ -13,6 +13,7 @@ function editor_stylesheets_custom_demo($stylesheets) {
  
   //$stylesheets配列の最後に読み込む順番でファイルパスを追加していく
   array_push($stylesheets,
+    get_template_directory_uri().'/css/bootstrap-grid.css',
     get_template_directory_uri().'/css/editor-style.css',
     get_template_directory_uri().'/css/style.css',
     get_template_directory_uri().'/style.css'
