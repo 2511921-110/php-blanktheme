@@ -2,6 +2,9 @@
 // wp_enqueue_script('jquery');
 add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
 
+//画像のサイズ追加
+add_image_size('square__large', 600, 600, true);
+
 // add_editor_style('css/style.css');
 // add_editor_style('style.css');
 add_filter( 'editor_stylesheets', 'editor_stylesheets_custom_demo');
